@@ -24,21 +24,32 @@ const kittyPrompts = {
     
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = kitties.filter(function(kitten) {
+        if (kitten.color === 'orange'){
+        return kitten;
+        }
+    });
+    const orangeKittyNames = result.map(function(kit) {
+    return kit.name;
+    });;
+    return orangeKittyNames;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // `kitties` is an array of kitten objects. In order to get the kittens with the key of color set to the value "orange", the array needs to be filtered. Filter iterates through an array and returns a new array with a collection of elements that match the condition provided. The new array consisted of two objects, each with three properties. In order to abstract the value from the `name` property as a strings in an array, the map array prototype method needed to be used.
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 
+        kitties.sort(function(kit1, kit2) {
+        return kit2.age - kit1.age;
+        });   
+    
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Because we want to order by a property inside the objects in the kitties array. We have to use the sort array prototype method and dot notation to get to the value of the property age. The test wanted the order to be oldest to youngest. To reverse that order, the current value being compared (kit2.age) has to be set as the greater value.
   },
 
   growUp() {
