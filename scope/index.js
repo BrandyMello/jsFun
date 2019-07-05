@@ -6,21 +6,21 @@ const scope = {
 
     function changePerson() {
       if (personA === 'Paul') {
-        person = 'CardiB';
+        person = 'CardiB'; //person = 'CardiB' has become globally scoped
         beautifyPerson();
       }
 
       function beautifyPerson() {
-        // Log A: personB
+        // Log A: personB  //A: 'Ben'
         
         if (personB.includes('B')) {
-          personB = person;
-          personC = personB;
+          personB = person; //globally scoped - personB (reassigned as) = 'CardiB'
+          personC = personB; //globally scoped - personC (reassigned as) = 'CardiB'
           // Log B: personC
         }
       }
 
-      personC = personA;
+      personC = personA; //globally scoped - personC = 'Paul' (reassigned)
 
       // Log C: personB
     }
@@ -29,11 +29,38 @@ const scope = {
 
     // Log D: personC
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      { A : 'Ben' },
+      { B : 'CardiB'},
+      { C : 'CardiB' },
+      { D : 'Paul' }
+    ];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Three variables are assigned to the global scope as personA, personB, and personC with the let keyword
+    //On line 7 there is the changePerson function declared with a nested function inside, but we skip over functions until they are invoked
+    //That takes us to line 28 where the function changePerson is invoked which takes us back up to line 7
+    //In the function, there is a conditional met by the globally scoped personA. We go inside the conditional where a new variable is declared without a keyword throwing it into the global scope.
+    //Our global variables are as follows:
+    //let personA = 'Paul';
+    // let personB = 'Ben';
+    // let personC = 'Tom';
+    // person = 'CardiB';
+    //The nested function beautifyPerson is invoked in the conditional
+    //We move to line 13 where the function is declared and log personB, 'Ben'
+    //There is a conditional that personB fulfills and we go into the conditional to globally reassign (without a keyword) personB to person and personC to personB(now same as person):
+    //let personA = 'Paul';
+    // let personB = 'CardiB';
+    // let personC = 'CardiB';
+    // person = 'CardiB';
+    //Now we log personC, 'CardiB'
+    //On line 23 (still in the function, but outside the nested function), we reassign personC = 'Paul' and now:
+    //let personA = 'Paul';
+    // let personB = 'CardiB';
+    // let personC = 'Paul';
+    // person = 'CardiB';
+    //We log personB, 'CardiB' on the last line of the function and hop to line 30 after the function invocation and log personC, 'Paul'
   },
 
   exerciseB() {
@@ -63,11 +90,24 @@ const scope = {
 
     // Log D: number
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result =  [{
+      A: 75 
+    }, {
+      B: 64
+    }, {
+      C: 64
+    }, {
+      D: 30
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //We start at line 67 where number is assigned to 30, we skip over numberFunction and the nested newNumber toline 89 where numberFunction is invoked which brings us back to line 69.
+    //On line 70 number is reassigned to 75
+    //There is a a conditional that reassigns with let but it is block scoped and the first console.log is outside that block and so Log A: 75
+    //We pass over newNumber, but line 84 invokes it and takes us back up to line 78
+    //In newNumber number is reassigned to 64 without var, let, or const and so it moves up the scope chain to line 70 where it is reassigned in the numberFunction's functional scope so both Log B:64 and Log C:64
+    //We pop out of that function and are back in the global scope where number = 30, so the last Log D:30
   },
 
   exerciseC() {
@@ -97,11 +137,26 @@ const scope = {
 
     // Log D: greeting
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 'Yo' 
+    }, {
+      B: 'Hey'
+    }, {
+      C: 'Hey'
+    }, {
+      D: 'Hello'
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+
+//greeting is declared globally with let; the greeting Function is declared with a nested newPhrase Function
+//Both are passed over until greetingFunction is invoked at which time a new variable with the same name of greeting is declared with var in the functional scop of greetingFunction.
+//There is a conditional that assigns another variable of greeting with let to 'Howdy' but there it is block scoped and the first console log is outside the block scope, but still in the functional scope and so A: "Yo"
+//we pass over the newPhrase function until it is invoke later in the greetingFunction at which time we dive into the newPhrase Function where greeting is immediately reassigned to 'Hey' and console logged B: 'Hey'
+//We exit that functional scope, but since it was reassigned without a let, var, or const the value travels up the scope chain ad finds the parent variable to reassign and that is within the greeting Function.
+//The next console log is still in the greeting function and so C: 'Hey'
+//Then we are done with the functions and back in the global scope where greeting is assigned to 'Hello' so the last console log is D: 'Hello'
   },
 
   exerciseD() {
@@ -131,11 +186,28 @@ const scope = {
 
     // Log D: greeting
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+        A: 'hi' 
+      }, {
+        B: 'welcome'
+      }, {
+        C: 'welcome'
+      }, {
+        D: 'howdy'
+      }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //A: 'hi'
+    //B: 'welcome'
+    //C: 'welcome'
+    //D: 'howdy'
+    //greeting assigned to 'Howdy'in global scope
+    //Pass grettingGenerator until invoked and then go into greetingGenerator where gretting is assigned to in the functional scope to 'hi'
+    //A conditional reassigns in the block of conditional but does not log until back in the functional scope where A: 'hi'
+    //newGreeting is passed, invoked and then entered where greeting is reassigned without var, let or const and so it traverses up the scope chain and attaches to the functional scope as 'welcome'; it is also logged immediately so B: 'welcome' 
+    //We leave the nested function newGreeting and are back in the parent function where greeting is assigned to C: 'welcome' due to the first line of newGreeting
+    //Then we pop back into the global scope where D: 'howdy'
   },
 
   exerciseE() {
@@ -163,11 +235,26 @@ const scope = {
 
     // Log D: name
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+      const result = [{
+        C: 'Brittany' 
+      }, {
+        A: 'Nathaniel'
+      }, {
+        B: 'Nathaniel'
+      }, {
+        D: 'Brittany'
+      }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //name is assigned to 'Brittany'
+    //We pass over the sayName function
+    //but log C is called C: 'Brittany'
+    //invoke sayName function.In function name is assigned to 'Pam' in the functional scope. There is a conditional where if name is equal to 'Pam' (which it is) then name is reassigned without let, var, or const to 'Nathaniel' so it traverses up the scope chain to the next assignment of name which is in the functional scope of sayName.
+    //There is another conditional that reassigns it to 'Brittany' but just inside that block scope where no console logis called
+    //the next console log is A inside the sayName function where name is assigned to 'Nathaniel' so A: 'Nathaniel'
+    //We exit the outer conditional and are back in the functional scope where name is still 'Nathanial' so B: 'Nathanial'
+    //Then we exit the functional scope and are in the global scope where D: 'Brittany'
   },
 
   exerciseF() {
