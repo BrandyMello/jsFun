@@ -27,24 +27,24 @@ const kittyPrompts = {
     const result = kitties.filter(function(kitten) {
       if (kitten.color === 'orange'){
         return kitten;
-    }
-  });
+      }
+    });
 
     const orangeKittyNames = result.map(function(kit) {
       return kit.name;
-    });;
-      return orangeKittyNames;
+    });
+    return orangeKittyNames;
 
     // Annotation:
     // `kitties` is an array of kitten objects. In order to get the kittens with the key of color set to the value "orange", the array needs to be filtered. Filter iterates through an array and returns a new array with a collection of elements that match the condition provided. The new array consisted of two objects, each with three properties. In order to abstract the value from the `name` property as a strings in an array, the map array prototype method needed to be used.
-},
+  },
 
   sortByAge() {
     // Sort the kitties by their age
 
     const result = 
         kitties.sort(function(kit1, kit2) {
-        return kit2.age - kit1.age;
+          return kit2.age - kit1.age;
         });   
     
     return result;
@@ -67,7 +67,12 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 
+      kitties.map(obj => {
+        newObj = obj;
+        newObj.age = obj.age += 2;
+        return newObj;
+      });
     return result;
   }
 };
@@ -99,7 +104,15 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubs.reduce(function(accum, club) {
+      club.members.forEach(function(member) {
+        if(!accum[member]){
+          accum[member] = [];
+        }
+        accum[member].push(club.club);
+      });
+      return accum;
+    }, {});
     return result;
 
     // Annotation:
@@ -135,7 +148,12 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.map(obj => {
+      var newArrayOfObjects = {};
+      newArrayOfObjects['mod'] = obj.mod;
+      newArrayOfObjects['studentsPerInstructor'] = obj.students/obj.instructors;
+      return newArrayOfObjects;
+    });
     return result;
 
     // Annotation:
@@ -170,11 +188,18 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(obj => {
+      let newCakeFlavorObj = {};
+      newCakeFlavorObj.flavor =obj.cakeFlavor;
+      newCakeFlavorObj.inStock = obj.inStock;
+      return newCakeFlavorObj;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //Create a new object
+    // map through cake data because map returns an array with the same number of items and we want to return all the cakes with their flavors
+    //withing the new object and the map, assign each property we want to retain to a new property in the new object
   },
 
   onlyInStock() {
@@ -198,22 +223,25 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => cake.inStock > 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // take the cake data base and filter out all the cakes with the property of inStock to have a value higher than 0
   },
   
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+    const result = cakes.map(cake => cake.inStock).reduce((acc, stockNum) => {
+      return acc +=stockNum;
+    }); 
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Iterate through cakes to grab all the values of inStock and add them all together(reduce)
   },
 
   allToppings() {
@@ -221,11 +249,19 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce(function(acc, cake) {
+      return [...acc, ...cake.toppings];
+    }, []).reduce((acc, topping) => {
+      if (acc.indexOf(topping) === -1) {
+        acc.push(topping);
+      }
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Iterate through the array of cakes and grab each array of toppings
+    //iterate over each array and return only those that are not already in the array
   },
 
   groceryList() {
@@ -239,7 +275,16 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      return [...acc, ...cake.toppings];
+    }, []).reduce(function(allToppings, topping) {
+      if(!allToppings[topping]) {
+        allToppings[topping] = 1;
+      } else {
+        allToppings[topping] ++;
+      }
+      return allToppings;
+    }, {});
     return result;
 
     // Annotation:
