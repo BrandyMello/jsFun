@@ -319,7 +319,7 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(room => room.program === 'FE');
     return result;
 
     // Annotation:
@@ -334,7 +334,26 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((allClasses, classObj) => {
+      if (classObj.program === 'FE') {
+        if(allClasses.feCapacity) {
+          allClasses.feCapacity += classObj.capacity;
+        } 
+        if(!allClasses.feCapacity){
+          allClasses.feCapacity = classObj.capacity;
+        }
+      }
+      if (classObj.program === 'BE') {
+        if(allClasses.beCapacity) {
+          allClasses.beCapacity += classObj.capacity;
+        }
+        if(!allClasses.beCapacity){
+          allClasses.beCapacity = classObj.capacity;
+        }
+      } 
+      return allClasses;
+     
+    }, {});
     return result;
 
     // Annotation:
@@ -344,7 +363,7 @@ const classPrompts = {
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((low, high) => low.capacity - high.capacity);
     return result;
 
     // Annotation:
@@ -374,7 +393,10 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((allBreweries, brewery) => {
+      allBreweries += brewery.beers.length;
+      return allBreweries;
+    }, 0);
     return result;
 
     // Annotation:
