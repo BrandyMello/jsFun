@@ -400,7 +400,8 @@ const breweryPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // From breweries, get to beers and count the length of the array
+    //increment each brewery's array count of beers
   },
 
   getBreweryBeerCount() {
@@ -412,11 +413,18 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => {
+      let eaBrewery = {};
+      eaBrewery['name'] = brewery.name;
+      eaBrewery['beerCount'] = brewery.beers.length;
+      return eaBrewery;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Map through the breweries array
+    //for each object create a new object with a property of name assigned to the breweries name
+    //and a property for beerCount assigned to the length of the beers array
   },
 
   findHighestAbvBeer() {

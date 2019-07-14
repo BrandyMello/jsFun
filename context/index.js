@@ -72,11 +72,11 @@ const context = {
     var breed = dog.getBreed();
 
     // What is the value of `this` when we call breed()?
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'global window object';
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment
+    // At line 68 innerFunction is referenced rather than called and so `this` inside loses it's reference to dog.
   },
 
   exerciseE() {

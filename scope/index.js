@@ -261,29 +261,29 @@ const scope = {
     var dog = 'Spot';
 
     function petDog() {
-      // Log A: dog
+      // Log A: 'Spot'
 
       if (dog === 'Spot') {
         let dog = 'Fluffy';
       }
 
       function rollOver() {
-        // Log B: dog
+        // Log B: 'Spot'
 
         dog = 'Biscuit';
 
-        // Log C: dog
+        // Log C: 'Biscuit'
 
       }
 
       rollOver();
 
-      // Log D: dog
+      // Log D: 'Biscuit'
     }
 
     petDog();
 
-    // Log E: dog
+    // Log E: 'Biscuit'
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
