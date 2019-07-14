@@ -285,11 +285,33 @@ const scope = {
 
     // Log E: 'Biscuit'
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 'Spot' 
+    }, {
+      B: 'Spot'
+    }, {
+      C: 'Biscuit'
+    }, {
+      D: 'Biscuit'
+    }, {
+      E: 'Biscuit'
+    }
+    ];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // The variable dog is assigned to 'Spot'
+    //petDog is invoked; we go inside and immediately dog is logged
+    //So A:'Spot'
+    //We reassign Spot to Fluffy with let inside an if statement(block scoped) but never log dog inside the block
+    //WE have a rollover funciton inside that is called and entered
+    //dog is logged B:'Spot'
+    //dog is reassigned without a keyword so it traverses upi the scope chain and attaches to the variable in the global scope
+    //C: 'Biscuit'
+    //We exit the nested function and log again, nothing has changed
+    //D: 'Biscuit'
+    //We exit the outer function and log
+    //E: 'Biscuit'
   },
 
   exerciseG() {
@@ -315,11 +337,27 @@ const scope = {
 
     // Log D: fruit
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 'reference error' 
+    }, {
+      B: 'mango'
+    }, {
+      C: 'mango'
+    }, {
+      D: 'apple'
+    }
+    ];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // fruit is assigned to 'apple' globally with var
+    //eatfruit invoked, enter function, then enter if statement and reassign to 'mango' with var which with a var declaration you cannot use var to reassign with the keyword
+    //enter another if statement and log fruit, but because double declaration
+    //A: 'reference error'
+    //reassign within if block with const to 'strawberry' but don't log and only block scoped
+    //exit conditional and log, still in the functional scope where assigned to B: 'mango'
+    //leave outer block and log, but still in functional scope so C: 'mango'
+    //exit function into global scope where D: 'apple'
   },
 
   exerciseH() {
