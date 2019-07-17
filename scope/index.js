@@ -366,7 +366,7 @@ const scope = {
     const fn1 = function() {
       let num = 4;
 
-      // Log A: num
+      // Log A: 4
 
       if (num < 5) {
         const num = 9;
@@ -375,29 +375,44 @@ const scope = {
 
         const newNum = num;
 
-        // Log B: newNum
+        // Log B: 9
       }
 
       newNum = num;
 
-      // Log C: newNum
+      // Log C: 4
     };
 
     const fn2 = function(num){
-      // Log D: num
+      // Log D: 9
 
       num = num + 1;
 
-      // Log E: num
+      // Log E: 10
     };
 
     fn1();
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result =   [{
+      A: 4
+    }, {
+      D: 9
+    }, {
+      E: 10
+    }, {
+      B: 9
+    }, {
+      C: 4
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //num is assigned to 6 in the global scope with let
+    //call fn1 num is reassigned to 4 with let in the function scope and logged A: 4
+    //num is assigned to 9 with const in the conditional which calls fn2 and passes the num as 9 through to fn2 below and logged D: 9
+    //num is reassigned in the function to 10 and logged E: 10
+    //then we go back into the fn1 if statement and num is given a new variable name by reassignment and logged as B: 9
+    //we exit the conditional and num is logged again but num is now back in the fn1 function and num is 4 in that functional scope so C: 4
   },
 
   exerciseI() {
@@ -405,30 +420,51 @@ const scope = {
 
     function eatSnack() {
       hunger -= 25;
-      // Log A: hunger
+      // Log A: 75 /55
       gorgeYourself();
 
       function gorgeYourself() {
         const hunger = 0;
-        // Log B: hunger
+        // Log B: 0 /0
       }
 
-      // Log C: hunger
+      // Log C: 75 /55
     }
 
     eatSnack();
 
     hunger += 5;
-    // Log D: hunger
+    // Log D: 80 
 
     eatSnack();
-    // Log E: hunger
+    // Log E: 55
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 75
+    }, {
+      B: 0
+    }, {
+      C: 75
+    }, {
+      D: 80
+    }, {
+      A: 55
+    }, {
+      B: 0
+    }, {
+      C: 55
+    }, {
+      E: 55
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //hunger is set to a global variable of 100
+    //eatSnack is called and when we get in 25 is subtracted from hunger, reassigning it to 75 and logged A: 75 in the global scope without var
+    //gorgeYourself is called inside the function and assigned to zero with const which is scoped functionally to the inside of that function block and logged B: 0
+    //Outside of gorgeYourself, but still in eatSnack, hunger is logged at C: 75
+    //We end up in the code after the invocation of eatSnack where hunger is gloablly reassigned from 74 to D: 80
+    //eatSnack is called again and A: 55, B: 0, C: 55 then below the invocation again and hunger is logged as E:55 because we are outside the functional scope and back in the global scope which was reassigned globally on the first line of eatSnack
   },
 
   exerciseJ() {
