@@ -470,22 +470,22 @@ const scope = {
   exerciseJ() {
     let sandwich = 'ketchup sandwich';
 
-    // Log A: sandwich
+    // Log A: ketchup sandwich
 
     const addChipotle = () => {
-      // Log B: toppings
+      // Log B: undefined
       var toppings = 'chipotle sauce';
 
       if (toppings === 'chipotle sauce') { 
         sandwich = 'not a mediocre sandwich';
       }
 
-      // Log C: sandwich
+      // Log C: 'not a mediocre sandwich'
     };
 
     const addCheese = () => {
       let cheeseTopping = 'gouda';
-      // Log D: cheeseTopping
+      // Log D: gouda
 
       const shesTheManReference = () => {
         amandaBynes = 'National Treasure';
@@ -498,14 +498,35 @@ const scope = {
     addCheese();
 
     addChipotle();
-    // Log E: sandwich
+    // Log E: 'not a mediocre sandwich'
     // Log F: amandaBynes
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 'ketchup sandwich'
+    }, {
+      D: 'gouda'
+    }, {
+      B: undefined
+    }, {
+      C: 'not a mediocre sandwich'
+    }, {
+      E: 'not a mediocre sandwich'
+    }, {
+      F: 'National Treasure'
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // sandwich is assigned to 'ketchup sandwich' in the global scope with let and is logged immediately A: 'ketchup sandwich'
+    //cheeseTopping is globally scoped to 'kraft'
+    //and addCheese is invoked; inside cheeseTopping is reassigned in the functional scope of addCheese to D: 'gouda'
+    //shesTheManReference is call as a nested function and then we leave both functions where addChipotle is invoked
+    //inside toppings is logged but hasn't been defined yet so B: undefined
+    //toppings is declared with var and assigned to 'chipotle sauce'
+    //inside the conditional sandwich is reassigned without a keyword so it traverses up the scope chain to the nearest declaration of sandwich which is scoped globally
+    //then C: 'not a mediocre sandwich'
+    //we exit the function and the next log askes for sandwich E: 'not a mediocre sandwich'
+    //Then amandaBynes is logged in the global scope where it is assigned F: 'National Treasure'
   },
 
   exerciseK() {
@@ -515,14 +536,18 @@ const scope = {
       if (num > 5) {
         num = 7;
       }
-      // Log A: num
+      // Log A: 7
     }
 
     foo();
 
-    // Log B: num
+    // Log B: 7
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 7
+    }, {
+      B: 7
+    }];
     return result;
 
     // Annotation:
@@ -530,7 +555,7 @@ const scope = {
   },
 
   exerciseL() {
-    let grade = 100;
+    let grade = 100;//90
 
     function losePoints() {
       grade = 90;
@@ -542,49 +567,64 @@ const scope = {
           let grade = 97;
         }
 
-        // Log A: grade
+        // Log A: 95
       }
 
       addPoints();
 
-      // Log B: grade
+      // Log B: 90
     }
 
     losePoints();
 
-    // Log C: grade
+    // Log C: 90
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 95
+    }, {
+      B: 90
+    }, {
+      C: 90
+    }];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // grade globally scoped as 100
+    //losePoints invoked
+    //grade traverses up scope chain to global assignment of 90
+    //addPoints invoked and grade functionally scoped to 95
+    //then logged A: 95
+    //leave function logged B: 90
+    //exit function to globl scope and logged C: 90
   },
 
   exerciseM() {
-    var num = 5;
+    var num = 5;//6
 
     function first() {
-      // Log A: num
+      // Log A: 5
       num = 6;
-      // Log B: num
+      // Log B: 6
     }
 
     function second() {
-      // Log C: num
+      // Log C: 'reference error'
       let num = 7;
     }
 
     first();
     second();
 
-    // Log D: num
+    // Log D: 6
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // num assigned to 5
+    //first invoked and logged A: 5
+    //num assigned without keyword moves up scope chain to global scope and logged B: 6
+    //
   },
 
   exerciseN() {
