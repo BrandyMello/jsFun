@@ -433,15 +433,16 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
+
     const result = breweries.reduce((allBreweries, brewery) => {
       return [...allBreweries, ...brewery.beers];
     }, []);
-    let highestAbv = allTheBrews
-    .map(beer => beer.abv)
-    .sort((low, high) => low - high)
-    .pop();
-    let result = allTheBrews.find(brewery => brewery.abv === highestAbv);
-    return result;
+    let highestAbv = result
+      .map(beer => beer.abv)
+      .sort((low, high) => low - high)
+      .pop();
+    let theBrew = result.find(brewery => brewery.abv === highestAbv);
+    return theBrew;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -488,7 +489,17 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.map(instructor => {
+      const instructorsName = {};
+      instructorsName['name'] = instructor.name;
+      cohorts.forEach(cohort => {
+        if(instructor.module === cohort.module) {
+          instructorsName['studentCount'] = cohort.studentCount;
+        }
+      });
+    
+      return instructorsName;
+    });
     return result;
 
     // Annotation:
@@ -506,7 +517,9 @@ const turingPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //count number of instructors per cohort
+    //create an object with the property of cohort number
+    //set the cohort number to the number of instructors per cohort / studentCount
   },
 
   modulesPerTeacher() {
