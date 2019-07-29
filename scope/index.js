@@ -410,7 +410,7 @@ const scope = {
     //num is assigned to 6 in the global scope with let
     //call fn1 num is reassigned to 4 with let in the function scope and logged A: 4
     //num is assigned to 9 with const in the conditional which calls fn2 and passes the num as 9 through to fn2 below and logged D: 9
-    //num is reassigned in the function to 10 and logged E: 10
+    //num is reassigned in the function to 10 and logged E: 10 (this is reassigning the variable moving through the parameter not traveling up the scope chain)
     //then we go back into the fn1 if statement and num is given a new variable name by reassignment and logged as B: 9
     //we exit the conditional and num is logged again but num is now back in the fn1 function and num is 4 in that functional scope so C: 4
   },
@@ -521,7 +521,7 @@ const scope = {
     //cheeseTopping is globally scoped to 'kraft'
     //and addCheese is invoked; inside cheeseTopping is reassigned in the functional scope of addCheese to D: 'gouda'
     //shesTheManReference is call as a nested function and then we leave both functions where addChipotle is invoked
-    //inside toppings is logged but hasn't been defined yet so B: undefined
+    //inside toppings is logged but hasn't been defined yet(but is defined on the next line with var so it is hoisted within the function; if it was defined with let or const it would have thrown a reference error) so B: undefined
     //toppings is declared with var and assigned to 'chipotle sauce'
     //inside the conditional sandwich is reassigned without a keyword so it traverses up the scope chain to the nearest declaration of sandwich which is scoped globally
     //then C: 'not a mediocre sandwich'
@@ -617,7 +617,15 @@ const scope = {
 
     // Log D: 6
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [{
+      A: 5
+    }, {
+      B: 6
+    }, {
+      C: 'reference error'
+    }, {
+      D: 6
+    }];;
     return result;
 
     // Annotation:

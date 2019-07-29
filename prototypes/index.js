@@ -589,7 +589,16 @@ const bossPrompts = {
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = Object.values(bosses).map(boss => {
+      let currentBoss = boss.name;
+      let currentLoyalty = sidekicks.reduce((loyaltyCounter, sidekick) => {
+        if(currentBoss === sidekick.boss) {
+        loyaltyCounter += sidekick.loyaltyToBoss
+      }
+        return loyaltyCounter
+      }, 0);
+      return {bossName: currentBoss, sidekickLoyalty: currentLoyalty}
+    });
     return result;
 
     // Annotation:
